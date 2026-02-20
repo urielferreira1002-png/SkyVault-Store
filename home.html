@@ -203,30 +203,29 @@ let allProducts=[];
 
 async function loadProducts(){
 const grid=document.getElementById("productGrid");
-grid.innerHTML="<div class='empty-state'>Carregando...</div>";
-allProducts=[];
+grid.innerHTML="Testando...";
 
 try{
-const snap=await db.collection("products").get();
+const snap = await db.collection("products").get();
 
-if(snap.empty){
-grid.innerHTML="<div class='empty-state'>Nenhum produto encontrado.</div>";
+console.log("Docs encontrados:", snap.size);
+
+if(snap.size === 0){
+grid.innerHTML="Coleção vazia ou projeto errado.";
 return;
 }
 
 snap.forEach(doc=>{
-const data=doc.data();
-if(data.active === false) return;
+console.log(doc.id, doc.data());
+});
 
-allProducts.push({
-id:doc.id,
-name:data.name || "Produto",
-price:Number(data.price) || 0,
-image:data.image || "mente.png",
-badge:data.badge || "",
-category:data.category || "ebook"
-});
-});
+grid.innerHTML="Produtos encontrados. Veja o console (F12).";
+
+}catch(error){
+console.error("ERRO:", error);
+grid.innerHTML="Erro Firebase. Veja console.";
+}
+}
 
 renderProducts(allProducts);
 
