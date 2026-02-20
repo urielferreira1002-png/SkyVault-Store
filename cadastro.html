@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criar Conta | SkyVault Store</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+:root {
+    --preto-fundo: #000000;
+    --preto-card: #0a0a0a;
+    --dourado: #c5a059;
+    --dourado-gradiente: linear-gradient(135deg, #c5a059 0%, #f1d39b 50%, #b38b45 100%);
+    --branco: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+body { background-color: var(--preto-fundo); color: var(--branco); }
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.logo {
+    color: var(--dourado);
+    font-weight: 900;
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+    text-decoration: none;
+}
+
+.header-right {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn-back {
+    color: var(--dourado);
+    border: 1px solid var(--dourado);
+    padding: 6px 12px;
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
+.auth-card {
+    background: var(--preto-card);
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.auth-card h2 {
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+.auth-card span {
+    color: var(--dourado);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: var(--dourado-gradiente);
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-google {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: transparent;
+    border: 1px solid #333;
+    color: white;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header class="main-header">
+    <a href="home.html" class="logo">SkyVault</a>
+
+    <div class="header-right">
+        <a href="javascript:history.back()" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
+</header>
+
+<main class="auth-container">
+    <div class="auth-card">
+        <h2>Criar <span>Conta</span></h2>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <input type="text" id="nome" placeholder="Nome Completo" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="senha" placeholder="Senha" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Criar Conta</button>
+
+            <button type="button" onclick="loginGoogle()" class="btn-google">
+                <i class="fab fa-google"></i> Entrar com Google
+            </button>
+        </form>
+    </div>
+</main>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAeQhnhf70Rl8pVXIczFHi6dTrmhBQkGGg",
+  authDomain: "fitblue-7beef.firebaseapp.com",
+  projectId: "fitblue-7beef",
+  storageBucket: "fitblue-7beef.firebasestorage.app",
+  messagingSenderId: "389213135420",
+  appId: "1:389213135420:web:7c1170b9bb709df89f1939"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Login Google
+function loginGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+        const user = result.user;
+
+        localStorage.setItem("userLogged", "true");
+        localStorage.setItem("userName", user.displayName);
+        localStorage.setItem("userPhoto", user.photoURL);
+
+        window.location.href = "home.html";
+    })
+    .catch((error) => {
+        alert("Erro ao entrar com Google");
+        console.log(error);
+    });
+}
+
+// Cadastro manual
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nome = document.getElementById('nome').value;
+
+    localStorage.setItem("userLogged", "true");
+    localStorage.setItem("userName", nome);
+
+    window.location.href = "home.html";
+});
+</script>
+
+</body>
+</html>
