@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkyVault Store | Coleção Premium</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+:root{
+--preto-fundo:#000;
+--preto-card:#0a0a0a;
+--dourado:#c5a059;
+--dourado-gradiente:linear-gradient(135deg,#c5a059 0%,#f1d39b 50%,#b38b45 100%);
+--branco:#fff;
+--transicao:all .4s cubic-bezier(.165,.84,.44,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:#000;color:#fff;overflow-x:hidden;}
+
+.main-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 5%;
+border-bottom:1px solid #1a1a1a;
+position:sticky;
+top:0;
+z-index:1000;
+background:#000;
+}
+
+.logo{
+color:var(--dourado);
+font-weight:900;
+font-size:1.4rem;
+letter-spacing:4px;
+text-transform:uppercase;
+text-decoration:none;
+}
+
+.menu-toggle{
+font-size:1.4rem;
+cursor:pointer;
+}
+
+.header-right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.btn-back{
+color:var(--dourado);
+border:1px solid var(--dourado);
+padding:6px 12px;
+border-radius:4px;
+text-decoration:none;
+transition:.3s;
+}
+
+.btn-back:hover{
+background:var(--dourado-gradiente);
+color:#000;
+border-color:transparent;
+}
+
+.mobile-menu{
+position:fixed;
+top:0;
+left:-100%;
+width:280px;
+height:100vh;
+background:#0a0a0a;
+padding:90px 30px;
+display:flex;
+flex-direction:column;
+gap:25px;
+transition:.4s;
+z-index:999;
+border-right:1px solid #1a1a1a;
+}
+
+.mobile-menu.active{left:0;}
+
+.mobile-menu a{
+color:#fff;
+text-decoration:none;
+font-size:.85rem;
+letter-spacing:1px;
+text-transform:uppercase;
+font-weight:600;
+transition:.3s;
+}
+
+.mobile-menu a:hover{color:var(--dourado);}
+
+.mobile-menu hr{
+border:none;
+border-top:1px solid #222;
+margin:10px 0;
+}
+
+.collection-header{
+text-align:center;
+padding:100px 20px 60px;
+}
+
+.collection-header h2{
+font-size:3rem;
+text-transform:uppercase;
+letter-spacing:5px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.collection-header p{
+color:var(--dourado);
+font-size:.9rem;
+letter-spacing:5px;
+text-transform:uppercase;
+}
+
+.product-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:40px;
+padding:0 8% 100px;
+max-width:1400px;
+margin:auto;
+}
+
+.product-card{
+background:var(--preto-card);
+border:1px solid #1a1a1a;
+padding:30px;
+text-align:center;
+transition:var(--transicao);
+}
+
+.product-card:hover{
+border-color:var(--dourado);
+transform:translateY(-10px);
+box-shadow:0 20px 50px rgba(197,160,89,.15);
+}
+
+.badge{
+display:inline-block;
+margin-bottom:14px;
+background:var(--dourado);
+color:#000;
+font-weight:900;
+font-size:.65rem;
+padding:6px 14px;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+.product-image{
+height:280px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:25px;
+}
+
+.product-image img{
+max-width:85%;
+transition:.6s;
+filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+}
+
+.product-card:hover img{transform:scale(1.08);}
+
+.product-price{
+font-size:1.8rem;
+color:var(--dourado);
+font-weight:800;
+margin:20px 0;
+}
+
+.btn-action{
+display:block;
+padding:16px;
+border:1px solid var(--dourado);
+color:var(--dourado);
+text-decoration:none;
+font-weight:900;
+font-size:.8rem;
+letter-spacing:3px;
+text-transform:uppercase;
+transition:.3s;
+cursor:pointer;
+background:transparent;
+}
+
+.product-card:hover .btn-action{
+background:var(--dourado-gradiente);
+color:#000;
+border-color:transparent;
+}
+
+.mini{
+color:#aaa;
+font-size:.85rem;
+line-height:1.4;
+min-height:44px;
+}
+
+.empty-state{
+text-align:center;
+color:#aaa;
+padding:40px 20px;
+grid-column:1/-1;
+border:1px dashed #222;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="main-header">
+
+<div class="menu-toggle" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<a href="#" class="logo">SkyVault</a>
+
+<div class="header-right">
+
+<a href="index.html" class="btn-back">
+<i class="fas fa-arrow-left"></i>
+</a>
+
+<div id="userArea">
+<i class="far fa-user"></i>
+</div>
+
+</div>
+
+</header>
+
+<nav class="mobile-menu">
+<a href="#">Produtos</a>
+<a href="#">Ofertas</a>
+<a href="#">Novidades</a>
+<hr>
+<a href="#"><i class="far fa-user"></i> Conta</a>
+<a href="#"><i class="fas fa-shopping-bag"></i> Carrinho</a>
+</nav>
+
+<div class="collection-header">
+<h2>Coleção Premium</h2>
+<p>Curadoria Exclusiva 2026</p>
+</div>
+
+<!-- ✅ AGORA A GRADE VAI SER PREENCHIDA PELO FIRESTORE -->
+<section class="product-grid" id="productGrid">
+  <div class="empty-state">Carregando produtos...</div>
+</section>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig={
+  apiKey:"AIzaSyAeQhnhf70Rl8pVXIczFHi6dTrmhBQkGGg",
+  authDomain:"fitblue-7beef.firebaseapp.com",
+  projectId:"fitblue-7beef",
+  storageBucket:"fitblue-7beef.firebasestorage.app",
+  messagingSenderId:"389213135420",
+  appId:"1:389213135420:web:7c1170b9bb709df89f1939"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Foto do Google no topo
+firebase.auth().onAuthStateChanged(function(user){
+  if(user){
+    document.getElementById("userArea").innerHTML =
+      `<img src="${user.photoURL}"
+        style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #c5a059;cursor:pointer;">`;
+  }
+});
+
+// Menu
+function toggleMenu(){
+  document.querySelector(".mobile-menu").classList.toggle("active");
+}
+
+// ✅ Carregar produtos do Firestore (coleção: products)
+async function loadProducts(){
+  const grid = document.getElementById("productGrid");
+  grid.innerHTML = ""; // limpa "Carregando..."
+
+  try{
+    // Puxa todos os produtos ativos
+    const snap = await db.collection("products").where("active","==",true).get();
+
+    if(snap.empty){
+      grid.innerHTML = `<div class="empty-state">Nenhum produto ativo no momento.</div>`;
+      return;
+    }
+
+    snap.forEach(doc=>{
+      const p = doc.data();
+
+      // Campos esperados:
+      // name (string), price (number), description (string),
+      // image (string opcional), badge (string opcional), currency (string opcional)
+      const name = p.name ?? "Produto";
+      const desc = p.description ?? "";
+      const price = p.price ?? 0;
+      const img = p.image ?? "https://i.imgur.com/8pS6YmX.png";
+      const badge = p.badge ?? "";
+      const currency = p.currency ?? "R$";
+
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        ${badge ? `<div class="badge">${badge}</div>` : ``}
+        <div class="product-image">
+          <img src="${img}" alt="${name}">
+        </div>
+        <h3>${name}</h3>
+        <p class="mini">${desc}</p>
+        <div class="product-price">${currency} ${Number(price).toFixed(2).replace(".", ",")}</div>
+        <button class="btn-action" onclick="viewDetails('${doc.id}')">Ver Detalhes</button>
+      `;
+      grid.appendChild(card);
+    });
+
+  }catch(err){
+    console.log(err);
+    grid.innerHTML = `<div class="empty-state">Erro ao carregar produtos. Veja o console.</div>`;
+  }
+}
+
+function viewDetails(productId){
+  window.location.href = `produto.html?id=${encodeURIComponent(productId)}`;
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>
