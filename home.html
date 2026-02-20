@@ -210,32 +210,30 @@ let allProducts=[];
 
 async function loadProducts(){
 const grid=document.getElementById("productGrid");
-grid.innerHTML="<div class='empty-state'>Carregando...</div>";
+grid.innerHTML="Testando conexão...";
 allProducts=[];
 
 try{
 const snap=await db.collection("products").get();
 
+console.log("Quantidade encontrada:", snap.size);
+
 if(snap.empty){
-grid.innerHTML="<div class='empty-state'>Nenhum produto encontrado.</div>";
+grid.innerHTML="A coleção está vazia.";
 return;
 }
 
 snap.forEach(doc=>{
-const data=doc.data();
-
-if(data.active === false) return;
-
-allProducts.push({
-id:doc.id,
-name:data.name || "Produto",
-price:Number(data.price) || 0,
-image:data.image || "mente.png",
-badge:data.badge || "",
-category:data.category || "ebook"
-});
+console.log("Produto:", doc.id, doc.data());
 });
 
+grid.innerHTML="Coleção encontrada. Veja o console (F12).";
+
+}catch(error){
+console.error("ERRO FIREBASE:", error);
+grid.innerHTML="Erro ao conectar. Veja o console.";
+}
+}
 renderProducts(allProducts);
 
 }catch(error){
