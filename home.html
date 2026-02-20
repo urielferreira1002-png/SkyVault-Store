@@ -158,22 +158,13 @@ color:#000;
 border-color:transparent;
 }
 
-.featured{
+.empty-state{
+text-align:center;
+color:#aaa;
+padding:40px 20px;
 grid-column:1/-1;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:40px;
-align-items:center;
-}
-
-.featured img{
-max-width:100%;
-}
-
-@media(max-width:768px){
-.featured{
-grid-template-columns:1fr;
-}
+border:1px dashed #222;
+border-radius:8px;
 }
 </style>
 </head>
@@ -190,13 +181,13 @@ grid-template-columns:1fr;
 </div>
 
 <div class="filter-bar">
-<button class="filter-btn active" onclick="filterCategory('all')">Todos</button>
-<button class="filter-btn" onclick="filterCategory('ebook')">Ebooks</button>
-<button class="filter-btn" onclick="filterCategory('pack')">Packs</button>
+<button class="filter-btn active" onclick="filterCategory(event,'all')">Todos</button>
+<button class="filter-btn" onclick="filterCategory(event,'ebook')">Ebooks</button>
+<button class="filter-btn" onclick="filterCategory(event,'pack')">Packs</button>
 </div>
 
 <section class="product-grid" id="productGrid">
-Carregando produtos...
+<div class="empty-state">Carregando produtos...</div>
 </section>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -219,39 +210,70 @@ let allProducts=[];
 
 async function loadProducts(){
 const grid=document.getElementById("productGrid");
-grid.innerHTML="";
-const snap=await db.collection("products").where("active","==",true).get();
+grid.innerHTML="<div class='empty-state'>Carregando...</div>";
+allProducts=[];
+
+try{
+const snap=await db.collection("products").get();
+
+if(snap.empty){
+grid.innerHTML="<div class='empty-state'>Nenhum produto encontrado.</div>";
+return;
+}
 
 snap.forEach(doc=>{
-allProducts.push({id:doc.id,...doc.data()});
+const data=doc.data();
+
+if(data.active === false) return;
+
+allProducts.push({
+id:doc.id,
+name:data.name || "Produto",
+price:Number(data.price) || 0,
+image:data.image || "mente.png",
+badge:data.badge || "",
+category:data.category || "ebook"
+});
 });
 
 renderProducts(allProducts);
+
+}catch(error){
+console.error(error);
+grid.innerHTML="<div class='empty-state'>Erro ao carregar produtos. Veja o console.</div>";
+}
 }
 
 function renderProducts(products){
 const grid=document.getElementById("productGrid");
 grid.innerHTML="";
 
+if(products.length === 0){
+grid.innerHTML="<div class='empty-state'>Nenhum produto ativo.</div>";
+return;
+}
+
 products.sort((a,b)=>a.price-b.price);
 
 products.forEach(p=>{
 const card=document.createElement("div");
 card.className="product-card";
+
 card.innerHTML=`
 ${p.badge?`<div class="badge">${p.badge}</div>`:""}
 <div class="product-image">
 <img src="${p.image}" alt="${p.name}">
 </div>
 <h3>${p.name}</h3>
-<div class="product-price">R$ ${Number(p.price).toFixed(2)}</div>
+<div class="product-price">R$ ${p.price.toFixed(2).replace(".",",")}</div>
 <a href="produto.html?id=${p.id}" class="btn-action">Ver Produto</a>
 `;
+
 grid.appendChild(card);
 });
 }
 
-function filterCategory(cat){
+function filterCategory(event,cat){
 document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
 event.target.classList.add("active");
 
