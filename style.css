@@ -17,8 +17,8 @@
 }
 
 body {
-    background-color: var(--branco);
-    color: var(--preto-profundo);
+    background-color: var(--preto-profundo);
+    color: var(--branco);
     overflow-x: hidden;
 }
 
@@ -57,9 +57,8 @@ header {
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: var(--branco);
     padding: 0 10%;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
+    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
                 url('https://images.unsplash.com/photo-1491933382434-500287f9b54b?q=80&w=1920');
     background-size: cover;
     background-position: center;
@@ -82,7 +81,7 @@ header {
     font-weight: 300;
 }
 
-/* ================= BOTÃO ================= */
+/* ================= BOTÃO PREMIUM ================= */
 
 .btn-gold {
     background: var(--dourado-linear);
@@ -95,44 +94,50 @@ header {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 0.85rem;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 .btn-gold:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(197, 160, 89, 0.4);
+    box-shadow: 0 25px 50px rgba(197, 160, 89, 0.5);
     filter: brightness(1.05);
 }
 
 /* ================= PRODUTO DESTAQUE ================= */
 
 .featured-product {
-    padding: 120px 8%;
+    padding: 140px 8%;
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     align-items: center;
-    gap: 100px;
+    gap: 120px;
 }
 
-/* IMAGEM ATUALIZADA */
+/* ================= IMAGEM PROFISSIONAL ================= */
+
 .product-image {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 520px;
+    padding: 40px 0;
 }
 
 .product-image img {
     width: 100%;
-    max-width: 650px; /* AQUI ESTÁ MAIOR */
-    filter: drop-shadow(0 40px 80px rgba(0,0,0,0.25));
+    max-width: 700px;
+    max-height: 780px;
+    object-fit: contain;
+    filter: drop-shadow(0 60px 120px rgba(0,0,0,0.45));
     transition: var(--transicao);
 }
 
 .product-image img:hover {
-    transform: scale(1.06);
+    transform: scale(1.05);
 }
 
-/* INFORMAÇÕES */
+/* ================= INFORMAÇÕES ================= */
+
 .product-info h2 {
     font-size: 3rem;
     margin-bottom: 20px;
@@ -140,7 +145,7 @@ header {
 }
 
 .price {
-    font-size: 2.5rem;
+    font-size: 2.6rem;
     color: var(--dourado-solido);
     font-weight: 400;
     margin-bottom: 30px;
@@ -148,13 +153,15 @@ header {
 
 /* ================= RESPONSIVO ================= */
 
-@media (max-width: 768px) {
-
+@media (max-width: 1024px) {
     .featured-product {
         grid-template-columns: 1fr;
+        gap: 70px;
         text-align: center;
-        gap: 50px;
     }
+}
+
+@media (max-width: 768px) {
 
     .hero h1 {
         font-size: 2.8rem;
@@ -166,6 +173,7 @@ header {
 
     .product-image img {
         max-width: 90%;
+        max-height: 550px;
     }
 
     header {
