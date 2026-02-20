@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkyVault Store | Premium</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+:root {
+    --preto-fundo: #000000;
+    --preto-card: #0a0a0a;
+    --dourado: #c5a059;
+    --dourado-gradiente: linear-gradient(135deg, #c5a059 0%, #f1d39b 50%, #b38b45 100%);
+    --branco: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+body { background-color: var(--preto-fundo); color: var(--branco); overflow-x: hidden; }
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid #1a1a1a;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    color: var(--dourado);
+    font-weight: 900;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    text-decoration: none;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.google-photo {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--dourado);
+    display: none;
+}
+
+.menu-toggle {
+    color: var(--dourado);
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                      url('copia.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-section h2 {
+    font-size: clamp(2rem, 8vw, 4rem);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+
+.hero-section p {
+    color: var(--dourado);
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+.btn-buy-now {
+    background: var(--dourado-gradiente);
+    color: #000;
+    text-decoration: none;
+    padding: 18px 50px;
+    font-weight: 900;
+    border-radius: 4px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background: var(--preto-card);
+    z-index: 2000;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    transition: 0.4s;
+}
+
+.sidebar.active { right: 0; }
+
+.sidebar a {
+    color: var(--branco);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    z-index: 1500;
+}
+.overlay.active { display: block; }
+</style>
+</head>
+
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<header class="main-header">
+    <a href="home.html" class="logo">SkyVault</a>
+
+    <div class="header-right">
+        <img id="userPhoto" class="google-photo">
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+<main class="hero-section">
+    <h2>SkyVault Store</h2>
+    <p>A loja que você tanto procura!</p>
+    <a href="home.html" class="btn-buy-now">COMPRAR AGORA</a>
+</main>
+
+<nav class="sidebar" id="sidebar">
+    <div style="text-align:right;cursor:pointer;color:var(--dourado);" onclick="toggleMenu()">
+        <i class="fas fa-times"></i>
+    </div>
+
+    <a href="javascript:history.back()">Voltar</a>
+    <a href="#">Produtos</a>
+    <a href="#">Ofertas</a>
+    <a href="#">Novidades</a>
+    <a href="cadastro.html">Minha Conta</a>
+    <a href="#">Carrinho</a>
+    <a href="#" onclick="logout()">Sair</a>
+</nav>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAeQhnhf70Rl8pVXIczFHi6dTrmhBQkGGg",
+  authDomain: "fitblue-7beef.firebaseapp.com",
+  projectId: "fitblue-7beef",
+  storageBucket: "fitblue-7beef.firebasestorage.app",
+  messagingSenderId: "389213135420",
+  appId: "1:389213135420:web:7c1170b9bb709df89f1939"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Verifica login
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        document.getElementById("userPhoto").src = user.photoURL;
+        document.getElementById("userPhoto").style.display = "block";
+    } else {
+        window.location.href = "cadastro.html";
+    }
+});
+
+function logout() {
+    firebase.auth().signOut().then(() => {
+        window.location.href = "cadastro.html";
+    });
+}
+
+function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('active');
+    document.getElementById('overlay').classList.toggle('active');
+}
+
+document.getElementById('overlay').onclick = toggleMenu;
+</script>
+
+</body>
+</html>
