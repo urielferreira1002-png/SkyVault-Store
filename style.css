@@ -81,7 +81,7 @@ header {
     font-weight: 300;
 }
 
-/* ================= BOTÃO PREMIUM ================= */
+/* ================= BOTÃO ================= */
 
 .btn-gold {
     background: var(--dourado-linear);
@@ -94,46 +94,46 @@ header {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 0.85rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
 }
 
 .btn-gold:hover {
     transform: translateY(-5px);
-    box-shadow: 0 25px 50px rgba(197, 160, 89, 0.5);
-    filter: brightness(1.05);
+    box-shadow: 0 25px 55px rgba(197, 160, 89, 0.5);
 }
 
 /* ================= PRODUTO DESTAQUE ================= */
 
 .featured-product {
-    padding: 140px 8%;
+    padding: 100px 8%;
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: 120px;
+    gap: 80px;
 }
 
-/* ================= IMAGEM PROFISSIONAL ================= */
+/* ================= IMAGEM AJUSTADA ================= */
 
 .product-image {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 520px;
     padding: 40px 0;
 }
 
 .product-image img {
-    width: 100%;
-    max-width: 700px;
-    max-height: 780px;
+    width: auto;
+    height: auto;
+    max-width: 520px;
+    max-height: 620px;
     object-fit: contain;
-    filter: drop-shadow(0 60px 120px rgba(0,0,0,0.45));
-    transition: var(--transicao);
+    border-radius: 6px;
+    filter: drop-shadow(0 50px 100px rgba(0,0,0,0.6));
+    transition: 0.4s ease;
 }
 
 .product-image img:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 /* ================= INFORMAÇÕES ================= */
@@ -156,7 +156,7 @@ header {
 @media (max-width: 1024px) {
     .featured-product {
         grid-template-columns: 1fr;
-        gap: 70px;
+        gap: 60px;
         text-align: center;
     }
 }
@@ -173,7 +173,7 @@ header {
 
     .product-image img {
         max-width: 90%;
-        max-height: 550px;
+        max-height: 500px;
     }
 
     header {
