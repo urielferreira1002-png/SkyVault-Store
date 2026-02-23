@@ -119,64 +119,28 @@ header {
     gap: 80px;
 }
 
+/* AJUSTE PARA A IMAGEM NÃO FICAR BUGADA */
 .product-image {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 0;
+    padding: 20px;
+    background: radial-gradient(circle, rgba(197, 160, 89, 0.1) 0%, transparent 70%); /* Brilho sutil atrás */
 }
 
 .product-image img {
-    max-width: 520px;
-    max-height: 620px;
+    width: 100%;
+    max-width: 500px; /* Tamanho ideal para não perder qualidade */
+    height: auto;      /* Mantém a proporção original */
     object-fit: contain;
-    border-radius: 6px;
-    filter: drop-shadow(0 50px 100px rgba(0,0,0,0.6));
-    transition: 0.4s ease;
+    border-radius: 12px;
+    border: 1px solid rgba(197, 160, 89, 0.3); /* Borda fina dourada */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 
+                0 0 15px rgba(197, 160, 89, 0.2);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .product-image img:hover {
-    transform: scale(1.03);
-}
-
-.product-info h2 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    font-weight: 800;
-}
-
-.price {
-    font-size: 2.6rem;
-    color: var(--dourado-solido);
-    font-weight: 400;
-    margin-bottom: 30px;
-}
-
-/* RESPONSIVO */
-
-@media (max-width: 1024px) {
-    .featured-product {
-        grid-template-columns: 1fr;
-        gap: 60px;
-        text-align: center;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2.8rem;
-    }
-
-    .product-info h2 {
-        font-size: 2.2rem;
-    }
-
-    .product-image img {
-        max-width: 90%;
-        max-height: 500px;
-    }
-
-    header {
-        padding: 1.2rem 8%;
-    }
+    transform: scale(1.05) translateY(-10px);
+    border-color: #f1d39b;
 }
